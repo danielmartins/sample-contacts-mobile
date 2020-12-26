@@ -1,5 +1,6 @@
 import 'package:agenda_app/models/contact.dart';
 import 'package:agenda_app/screens/edit_contact.dart';
+import 'package:agenda_app/services/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,12 +14,11 @@ class Contacts extends StatelessWidget {
         actions: <Widget>[
           IconButton(
               icon: Icon(
-                Icons.add,
+                Icons.exit_to_app,
                 size: 30.0,
               ),
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => EditContact()));
+                context.read<AuthenticationService>().signOut();
               })
         ],
       ),
@@ -36,6 +36,13 @@ class Contacts extends StatelessWidget {
                 );
               })
           : Center(child: CircularProgressIndicator()),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => EditContact()));
+        },
+      ),
     );
   }
 }
